@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Profile</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 40px; }
+    .card { max-width: 400px; margin: auto; padding: 20px; border: 2px solid #ccc; border-radius: 12px; box-shadow: 2px 2px 8px rgba(0,0,0,0.1); }
+    img { margin-top: 15px; width: 80px; }
+    h2 { margin: 10px 0; }
+    p { margin: 6px 0; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <p>This is to certify that</p>
+    <h2 id="name">Loading...</h2>
+    <p id="phone"></p>
+    <p id="email"></p>
+    <p>is recognize my the <b>Ministry of Mining</b></p>
+    <img src="/my-pwa-app/mining.jpg" alt="Logo">
+  </div>
+
+  <script>
+    // Get ?id= from URL
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+
+    fetch("profiles.json")
+      .then(response => response.json())
+      .then(data => {
+        if (id && data[id]) {
+          document.getElementById("name").textContent = data[id].name;
+          document.getElementById("phone").textContent = "📞 " + data[id].phone;
+          document.getElementById("email").textContent = "📧 " + data[id].email;
+        } else {
+          document.getElementById("name").textContent = "Profile not found";
+        }
+      });
+  </script>
+</html>
